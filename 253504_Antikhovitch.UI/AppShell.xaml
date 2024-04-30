@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="_253504_Antikhovitch.UI.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:_253504_Antikhovitch.UI"
+    xmlns:pages="clr-namespace:_253504_Antikhovitch.UI.Pages"
+    FlyoutBackgroundColor="DimGray">
+
+
+    <FlyoutItem Title="Home"
+             FlyoutDisplayOptions="AsSingleItem">
+        <ShellContent         
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+        <FlyoutItem.FlyoutIcon>
+            <FontImageSource Glyph="&#xf38f;"
+                         FontFamily="ionicons"
+                         Size="24"/>
+        </FlyoutItem.FlyoutIcon>
+    </FlyoutItem>
+    <FlyoutItem Title="Teams"
+             FlyoutDisplayOptions="AsSingleItem">
+        <ShellContent         
+            ContentTemplate="{DataTemplate pages:TeamsPage}"
+            Route="TeamsPage" />
+        <FlyoutItem.FlyoutIcon>
+            <FontImageSource Glyph="&#xf2d9;"
+                         FontFamily="ionicons"
+                         Size="24"/>
+        </FlyoutItem.FlyoutIcon>
+    </FlyoutItem>
+
+</Shell>

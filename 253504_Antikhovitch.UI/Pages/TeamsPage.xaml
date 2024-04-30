@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:_253504_Antikhovitch.UI.ViewModels"
+             xmlns:entities="clr-namespace:_253504_Antikhovitch.Domain.Entities;assembly=253504_Antikhovitch.Domain"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converter="clr-namespace:_253504_Antikhovitch.UI.ValueConverters"
+             x:DataType="models:TeamsViewModel"
+             x:Class="_253504_Antikhovitch.UI.Pages.TeamsPage"
+             Title="TeamsPage"
+             Shell.BackgroundColor="LightGrey"
+             BackgroundColor="WhiteSmoke">
+    <Shell.TitleView >
+        <StackLayout Orientation="Horizontal" Padding="10,0,20,0">
+            <ImageButton Command="{Binding Source={RelativeSource 
+                            AncestorType={x:Type models:TeamsViewModel}},
+                            Path= AddNewTeamCommand}" 
+                         BackgroundColor="Transparent"
+                         HorizontalOptions="EndAndExpand">
+                <ImageButton.Source>
+                    <FontImageSource Glyph="&#xf48b;"
+                                     Color="Black"
+                                     FontFamily="ionicons"
+                                     Size="32"/>
+                </ImageButton.Source>
+            </ImageButton>
+            <ImageButton Command="{Binding Source={RelativeSource 
+                            AncestorType={x:Type models:TeamsViewModel}},
+                            Path= AddNewParticipantCommand}"  
+                         BackgroundColor="Transparent">
+                <ImageButton.Source>
+                    <FontImageSource Glyph="&#xf39f;"
+                                     Color="Black"
+                                     FontFamily="ionicons"
+                                     Size="32"/>
+                </ImageButton.Source>
+            </ImageButton>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior 
+            EventName="Loaded"
+            Command="{Binding UpdateTeamListCommand}"/>
+    </ContentPage.Behaviors>
+    <ContentPage.Resources>
+        <converter:PriceToColorValueConverter x:Key="PointToColorConverter"/>
+        <converter:ByteArrayToImageSourceConverter x:Key="ByteToImageSource"/>
+    </ContentPage.Resources>
+    <StackLayout 
+        Padding="8" 
+        Spacing="10">
+        <Picker
+            x:Name="TeamsPicker"
+            BackgroundColor="Grey"
+            ItemsSource="{Binding Teams}"
+            ItemDisplayBinding="{Binding Name}"
+            Title="Выберите команду"
+            TitleColor="Black"
+            FontSize="20"
+            SelectedItem="{Binding SelectedTeam}">
+            <Picker.Behaviors>
+                <toolkit:EventToCommandBehavior
+                    EventName="SelectedIndexChanged"
+                    Command="{Binding UpdateParticipantsListCommand}"/>
+            </Picker.Behaviors>
+            <Picker.Shadow>
+                <Shadow Brush="Black"
+                            Offset="1,1"
+                            Radius="10"
+                            Opacity="1" />
+            </Picker.Shadow>
+        </Picker>
+        <ScrollView
+            HeightRequest="680">
+            <CollectionView
+                x:Name="ParticipantCollection"
+                ItemsSource="{Binding Participants}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="entities:Participant">
+                        <Grid RowDefinitions="*" ColumnDefinitions="*" Padding="2">
+                            <Border 
+                            Stroke="{Binding Points, Converter={StaticResource PointToColorConverter}}"
+                            StrokeThickness="3"
+                            StrokeShape="RoundRectangle 25,25,25,25"
+                            BackgroundColor="LightGrey">
+                                <HorizontalStackLayout>
+                                    <HorizontalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource
+                                                AncestorType={x:Type models:TeamsViewModel} },
+                                                Path=ShowDetailsCommand}"
+                                                CommandParameter="{Binding}"/>
+                                    </HorizontalStackLayout.GestureRecognizers>
+                                    <Border StrokeShape="RoundRectangle 25,25,25,25" HeightRequest="70" WidthRequest="70" StrokeThickness="0" Margin="5,2,2,2">
+                                        <Image
+                                        Margin="0,0,0,0"
+                                        Aspect="Fill"
+                                        Source="{Binding Image,Converter={StaticResource ByteToImageSource}}">
+                                        </Image>
+                                    </Border>
+                                    <Label
+                                    WidthRequest="230"
+                                    Margin="20"
+                                    FontSize="20"
+                                    TextColor="Black"
+                                    Text="{Binding PersonalData.Name}"
+                                    HorizontalOptions="EndAndExpand"/>
+                                </HorizontalStackLayout>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+
+    </StackLayout>
+
+</ContentPage>

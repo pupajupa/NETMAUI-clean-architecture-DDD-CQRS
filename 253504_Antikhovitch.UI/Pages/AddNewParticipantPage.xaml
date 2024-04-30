@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="_253504_Antikhovitch.UI.Pages.AddNewParticipantPage"
+             xmlns:models="clr-namespace:_253504_Antikhovitch.UI.ViewModels"
+             xmlns:entities="clr-namespace:_253504_Antikhovitch.Domain.Entities;assembly=253504_Antikhovitch.Domain"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converter="clr-namespace:_253504_Antikhovitch.UI.ValueConverters"
+             x:DataType="models:AddNewParticipantViewModel"
+             Title="AddNewParticipantPage" 
+             Shell.TitleColor="Black"
+             Shell.BackgroundColor="LightGrey"
+             BackgroundColor="WhiteSmoke">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior
+            EventName="Loaded"
+            Command="{Binding UpdateTeamsListCommand}"/>
+    </ContentPage.Behaviors>
+    <ScrollView>
+        <VerticalStackLayout HorizontalOptions="Center">
+            <Label Text="Добавление участника" FontSize="Header" TextColor="Black" Margin="10,10,10,30"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Text="Имя: " FontSize="20" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" VerticalOptions="Center" TextColor="Black"/>
+                <Entry Grid.Row="0" Grid.Column="1" Placeholder="Введите имя участника" FontSize="20" BackgroundColor="DarkGray" TextColor="Black"
+                   Text="{Binding Name}" VerticalOptions="Center"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Text="Дата рождения: " FontSize="20" VerticalOptions="Center" TextColor="Black" HorizontalTextAlignment="Center"/>
+                <DatePicker Grid.Row="1" Grid.Column="1" VerticalOptions="Center" Date="{Binding DateOfBirth}" TextColor="Black" FontSize="20"/>
+
+                <Label Grid.Row="2" Grid.Column="0" Text="Количество очков: " FontSize="20" VerticalOptions="Center" TextColor="Black" HorizontalTextAlignment="Center"/>
+                <Entry  Grid.Row="2" Grid.Column="1" FontSize="20" MaxLength="2"
+                   Text = "{Binding Points}" VerticalOptions="Center" BackgroundColor="DarkGray" TextColor="Black"/>
+    
+                <Button Grid.Row="3" Grid.ColumnSpan="2" Margin="15,15,15,10" Text="Выбрать файл: " FontSize="20" HeightRequest="50" CornerRadius="20" BackgroundColor="DarkGrey"  Command="{Binding SelectFileCommand}" TextColor="Black"/>
+                
+                <Image Grid.Row="4" Grid.ColumnSpan="2" Source="{Binding Image}" WidthRequest="500"/>
+
+                <Picker
+                    Grid.Row ="5"
+                    Grid.ColumnSpan="2"
+                    ItemsSource="{Binding Teams}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding SelectedTeam}"
+                    Title="Выберите команду"
+                    HeightRequest="80"
+                    TitleColor="Black"
+                    TextColor="Black"
+                    WidthRequest="200"
+                    BackgroundColor="DarkGrey"
+                    FontSize="20"/>
+                <Button
+                    Grid.Row="6"
+                    Margin="10"
+                    Grid.ColumnSpan="2"
+                    HeightRequest="50"
+                    CornerRadius="20"
+                    Text="Добавить"
+                    FontSize="18"
+                    Command="{Binding EnterCommand}"/>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+    
+</ContentPage>

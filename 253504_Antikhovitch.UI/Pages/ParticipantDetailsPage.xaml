@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:_253504_Antikhovitch.UI.ValueConverters"
+             xmlns:models="clr-namespace:_253504_Antikhovitch.UI.ViewModels"
+             xmlns:toolkit ="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:entities="clr-namespace:_253504_Antikhovitch.Domain.Entities;assembly=253504_Antikhovitch.Domain"
+             x:Class="_253504_Antikhovitch.UI.Pages.ParticipantDetailsPage"
+             x:DataType="models:ParticipantDetailsViewModel"
+             Shell.BackgroundColor="LightGrey"
+             BackgroundColor="WhiteSmoke">
+    <ContentPage.Resources>
+        <converters:ImageSourceConverter x:Key="ImageSourceId"/>
+        <converters:ByteArrayToImageSourceConverter x:Key="ByteToImageSource"/>
+    </ContentPage.Resources>
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal" Padding="0,0,20,0" HorizontalOptions="EndAndExpand">
+            <ImageButton Command="{Binding Source={RelativeSource 
+                            AncestorType={x:Type models:ParticipantDetailsViewModel}},
+                            Path= EditParticipantCommand}"
+                         CommandParameter="{Binding Participant}"
+                         Margin="5,0,5,0"
+                         BackgroundColor="Transparent"
+                         HorizontalOptions="EndAndExpand">
+                <ImageButton.Source>
+                    <FontImageSource Glyph="&#xf37e;"
+                                     FontFamily="ionicons"
+                                     Color="Black"
+                                     Size="25"/>
+                </ImageButton.Source>
+            </ImageButton>
+            <ImageButton Command="{Binding Source={RelativeSource 
+                            AncestorType={x:Type models:ParticipantDetailsViewModel}},
+                            Path= DeleteParticipantCommand}"
+                         CommandParameter="{Binding Participant}"
+                         Margin="0,0,5,0"
+                         BackgroundColor="Transparent">
+                <ImageButton.Source>
+                    <FontImageSource Glyph="&#xf37f;"
+                                     FontFamily="ionicons"
+                                     Color="Black"
+                                     Size="25"/>
+                </ImageButton.Source>
+            </ImageButton>
+        </StackLayout>
+    </Shell.TitleView>
+    <VerticalStackLayout
+        VerticalOptions="Center"
+        Spacing="20">
+        <Image Source="{Binding Participant.Image, Converter={StaticResource ByteToImageSource}}" HeightRequest="300" WidthRequest="500"></Image>
+        <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*" Padding="30" HorizontalOptions="Center">
+            <Label
+                Grid.Column="0"
+                Grid.Row="0"
+                Text="Name:"
+                TextColor="Black"
+                FontAttributes="Bold"
+                FontSize="32"/>
+                <Label
+                Grid.Column="1"
+                Grid.Row="0"
+                Text="{Binding Participant.PersonalData.Name}"
+                TextColor="Black"
+                FontSize="30"
+                />
+                <Label
+                Grid.Column="0"
+                Grid.Row="1"
+                HorizontalOptions="Start"
+                Text="Date of birth:"
+                Margin="0,0,5,0"
+                TextColor="Black"
+                FontAttributes="Bold"
+                FontSize="32"/>
+                <Label
+    Text="{Binding Participant.PersonalData.DateOfBirth, StringFormat='{0:yyyy-MM-dd}'}"
+                Grid.Column="1"
+                Grid.Row="1"
+                TextColor="Black"
+                FontSize="30"/>
+                <Label
+                Grid.Column="0"
+                Grid.Row="2"
+                Text="Points: " 
+                FontAttributes="Bold"
+                Margin="0,0,5,0"
+                TextColor="Black"
+                FontSize="32"/>
+                <Label
+                Grid.Column="1"
+                Grid.Row="2"
+                Text="{Binding Participant.Points}"
+                TextColor="Black"
+                FontSize="30"/>
+                <Label
+                    Grid.Column="0"
+                    Grid.Row="3"
+                    FontAttributes="Bold"
+                    Text="Team: " 
+                    Margin="0,0,5,0"
+                    TextColor="Black"
+                    FontSize="32"/>
+            <Label
+                    Grid.Column="1"
+                    Grid.Row="3"
+                    Text="{Binding Participant.TeamId}"
+                    TextColor="Black"
+                    FontSize="30"/>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>
